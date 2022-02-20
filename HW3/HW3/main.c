@@ -1,16 +1,25 @@
 #include<stdio.h>
 #include <string.h>
+#include <stdlib.h>
+#define MAX 15
+
 
 // Function prototypes
 void fillPassword(size_t , char[]);
 void showResults(char);
 // should have void listed
 void showMenu(void);
+void getUsernameAndCheck(char *var);
+void checkForPassword(void);
 
 // Define a variable to hold a password
 // and the copy
-char password[15];
-char cpassword[15];
+char password[MAX];
+char cpassword[MAX];
+char buf[MAX];
+char *buff_p = buf;
+FILE *sec_file;
+
 
 int main(void)
 {
@@ -55,6 +64,11 @@ int main(void)
     // Copy password
     memcpy(cpassword, password,sizeof(password));
     
+    // call to get username ///////////////////////////////////////////////////
+    getUsernameAndCheck(buff_p);
+    // tesst//////////////////////////////////////////////////////
+    printf("testing %s", buf);
+    
     // Pause before exiting
     char confirm;
     printf("Confirm your exit by pressing return!\n");
@@ -63,6 +77,33 @@ int main(void)
         confirm = getchar();
     }
     return 0;
+}
+
+void getUsernameAndCheck(char *var) {
+    printf("Enter your username of 15 or less characters");
+    char val = '0';
+    fgets(var, MAX, stdin);
+    while (val == '0') {
+        printf("Please enter username");
+        fgets(var, MAX, stdin);
+        if (strlen(var) > 15 || strlen(var) < 1) {
+            printf("Not a valid length username");
+            continue;
+        }
+        else {
+            printf("Your username is %s \n", var);
+            val = '1';
+        }
+    }
+    sec_file = fopen("shared_secrets.txt", "r");
+}
+
+// open password file and get password associated with username
+void checkForPassword(void) { ///////////////////////DCL20-C. Explicitly specify void when a function accepts no arguments
+    // File pointer
+    
+    
+    
 }
 
 // Make a String of '1's
